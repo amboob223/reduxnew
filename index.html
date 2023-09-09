@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter App with Redux</title>
+</head>
+<body>
+    <div>
+        <h1>Counter: <span id="counter">0</span></h1>
+        <button id="increment">Increment</button>
+        <button id="decrement">Decrement</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.min.js"
+            integrity="sha512-1/8Tj23BRrWnKZXeBruk6wTnsMJbi/lJsk9bsRgVwb6j5q39n0A00gFjbCTaDo5l5XrPVv4DZXftrJExhRF/Ug=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        // Reducer function to manage the counter state
+        const counter = (state = 0, action) => {
+            switch (action.type) {
+                case "increment":
+                    return state + 1;
+                case "decrement":
+                    return state - 1;
+                default:
+                    return state;
+            }
+        };
+
+        // Create a Redux store with the counter reducer
+        const store = Redux.createStore(counter);
+
+        // Function to update the UI with the current counter value
+        const render = () => {
+            const counterElement = document.getElementById("counter");
+            counterElement.textContent = store.getState().toString();
+        };
+
+        // Initial UI render
+        render();
+
+        // Handle the "Increment" button click
+        document.getElementById("increment").addEventListener("click", () => {
+            // Dispatch an "increment" action
+            store.dispatch({ type: "increment" });
+            // Update the UI
+            render();
+        });
+
+        // Handle the "Decrement" button click
+        document.getElementById("decrement").addEventListener("click", () => {
+            // Dispatch a "decrement" action
+            store.dispatch({ type: "decrement" });
+            // Update the UI
+            render();
+        });
+    </script>
+</body>
+</html>
